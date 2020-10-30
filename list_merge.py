@@ -5,6 +5,17 @@ from PIL import Image
 
 png_image_list = [f for f in glob.glob("*.png")]
 
+#Had to add the sort function because the images were not in order
+png_image_list.sort(key=lambda f: int(''.join(filter(str.isdigit, f))))
+
+for infile in png_image_list:
+    try:
+        with Image.open(infile) as im:
+            print(infile,im.format)
+    except OSError:
+        pass
+
+    
 image_list = [ Image.open(x) for x in png_image_list ]
 width,height = zip(*(i.size for i in image_list))
 
